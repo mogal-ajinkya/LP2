@@ -55,29 +55,47 @@ int isSafe(int x, int y)
 	return (x >= 0 && x < N && y >= 0 && y < N);
 }
 
-void printPath(Node* root,int final[N][N])
+void printPath(Node* root)
 {
 	if (root == NULL)
 		return;
-	printPath(root->parent,final);
-	int a = calculateCost(root->mat, final);
-	cout << " g-> " << root->level << " h->" << a << " f->" << a+root->level << endl;
+	printPath(root->parent);
+	cout << " g-> " << root->level << " h->" << root->cost << " f->" << root->cost+root->level << endl;
 	printMatrix(root->mat);
 
 	printf("\n");
 }
 
-struct comp
-{
-	bool operator()(const Node* lhs, const Node* rhs) const
-	{
+
+class comp {
+public:
+    bool operator()(Node* lhs,Node* rhs) 
+    {
 		return (lhs->cost + lhs->level)  > (rhs->cost + rhs->level);
-	}
+    }
 };
 
+int getInvCount(int arr[])
+{
+    int inv_count = 0;
+    for (int i = 0; i < 9 - 1; i++)
+        for (int j = i+1; j < 9; j++)
+             if (arr[j] && arr[i] &&  arr[i] > arr[j])
+                  inv_count++;
+    return inv_count;
+}
+ 
+bool isSolvable(int puzzle[3][3])
+{
+	// passing as single array 
+    int invCount = getInvCount((int *)puzzle);
+    return (invCount%2 == 0);
+}
+ 
 void solve(int initial[N][N],int x, int y,int final[N][N])
 {
 	priority_queue<Node*,vector<Node*>, comp> pq;
+
 	Node* root = newNode(initial, x, y, x, y, 0, NULL);
 	root->cost = calculateCost(initial, final);
 
@@ -91,7 +109,7 @@ void solve(int initial[N][N],int x, int y,int final[N][N])
 
 		if (min->cost == 0)
 		{
-			printPath(min,final);
+			printPath(min);
             cout << "step to solve : " << min->level << endl;
 			return;
 		}
@@ -134,6 +152,8 @@ int main()
 		{4, 5, 6},
 		{7, 8, 0}
 	};
+
+
    cout << endl;
 	for(int i=0;i<3;i++)
 	{
@@ -143,7 +163,14 @@ int main()
         else
 			cout << final[i][j] << " ";
 	cout << endl;}
+
 	cout << endl;
+
+	if(!isSolvable(initial))
+	{
+		cout << "Not Solvable !!" << endl;
+		return 0;
+	}
 	solve(initial, x, y, final);
 	return 0;
 }

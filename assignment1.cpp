@@ -1,15 +1,10 @@
-#include <iostream>
-#include <queue>
-#include <string>
-#include <stack>
-#include <algorithm>
+#include<bits/stdc++.h>
+using namespace std;
 
-#define LBR '\n'
 
 class ListNode {
     public:
-
-        std::string name = "";
+        string name = "";
         ListNode* next = nullptr ;
         ListNode* down = nullptr ;
 
@@ -21,8 +16,8 @@ class Graph {
     ListNode* head = nullptr ;
 
     void _add_edge(
-            std::string node_a , 
-            std::string node_b 
+            string node_a , 
+            string node_b 
             ) {
         if( head == nullptr ) {
             head = new( ListNode ) ; 
