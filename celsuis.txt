@@ -1,0 +1,36 @@
+public class tempconvert {
+    public Integer celsius {get;set;}
+    public Integer result {get;set;}
+    
+    public void main()
+    {
+        result = (celsius * 9/5) + 32;
+    }
+}
+
+<apex:page controller="tempconvert">
+<apex:form >
+    <apex:pageBlock title="Conversion" >
+        
+        <apex:pageBlockSection columns="1">
+        
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Enter temp in degree celsius : "></apex:outputLabel>
+        <apex:inputText value="{!celsius}"/>
+        </apex:pageBlockSectionItem>
+        
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value=" temp in degree f: "></apex:outputLabel>
+        <apex:inputText value="{!result}" id="res"/>
+        </apex:pageBlockSectionItem>
+        
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockButtons >
+        <apex:commandButton value="find" action="{!main}" reRender="res"/>
+        </apex:pageBlockButtons>>
+        
+    </apex:pageBlock>
+</apex:form>
+</apex:page>
+            

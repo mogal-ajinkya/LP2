@@ -23,7 +23,7 @@ bool solve(vector<vector<int>>& board ,int col ,vector<bool>rows ,vector<bool>le
 
 	for(int i = 0;i<N;i++) 
 	{ 
-		if(isSafe(i,col,rows,left_digonals,Right_digonals) == true) 
+		if(isSafe(i,col,rows,left_digonals,Right_digonals)) 
 		{ 
 			rows[i] = true; 
 			left_digonals[i+col] = true; 
